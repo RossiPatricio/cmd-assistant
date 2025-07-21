@@ -1,0 +1,12 @@
+personas (classes?)
+contactos
+
+send whastapp
+
+
+yt dlp
+
+_____
+
+
+Autocompletado: Implementa sugerencias de comandos usando una librería como prompt_toolkit. Por ejemplo, al escribir do, podría sugerir download o docs.
