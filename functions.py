@@ -3,21 +3,21 @@ from bs4 import BeautifulSoup
 import requests, time, subprocess
 
 def add(result, update):
-    """ Una función para agregar lineas a un archivo txt. """
+    """ Agregar lineas a un archivo txt. """
     my_lists = { 
-    'websites': r'C:\Users\PRossi\DOCSBACKUP\Lists\Websites.txt',
-    'website': r'C:\Users\PRossi\DOCSBACKUP\Lists\Websites.txt',
-    'movies': r'C:\Users\PRossi\DOCSBACKUP\Lists\Movies.txt',
-    'movie': r'C:\Users\PRossi\DOCSBACKUP\Lists\Movies.txt',
-    'actor': r'C:\Users\PRossi\DOCSBACKUP\Lists\Actors.txt',
-    'names': r'C:\Users\PRossi\DOCSBACKUP\Lists\Names.txt',
-    'name': r'C:\Users\PRossi\DOCSBACKUP\Lists\Names.txt',
-    'python': r'C:\Users\PRossi\DOCSBACKUP\Python.txt'}
+    'websites': r'C:\Users\PRossi\documents-backup\Lists\Websites.txt',
+    'website': r'C:\Users\PRossi\documents-backup\Lists\Websites.txt',
+    'movies': r'C:\Users\PRossi\documents-backup\Lists\Movies.txt',
+    'movie': r'C:\Users\PRossi\documents-backup\Lists\Movies.txt',
+    'actor': r'C:\Users\PRossi\documents-backup\Lists\Actors.txt',
+    'names': r'C:\Users\PRossi\documents-backup\Lists\Names.txt',
+    'name': r'C:\Users\PRossi\documents-backup\Lists\Names.txt',
+    'python': r'C:\Users\PRossi\documents-backup\Python.txt'}
 
     if result in my_lists:
         archivo = my_lists[result]
     else:
-        archivo = r'C:\Users\PRossi\DOCSBACKUP\any.txt'
+        archivo = r'C:\Users\PRossi\documents-backup\any.txt'
     
     try:
         with open(archivo, 'a') as object_file:
@@ -30,7 +30,7 @@ def add(result, update):
 
 def word_finder(keyword):
     """" Buscar y contar palabras en archivos .txt """ 
-    file = r'C:\Users\PRossi\DOCSBACKUP\Lists\Movies.txt'
+    file = r'C:\Users\PRossi\documents-backup\Lists\Movies.txt'
     count= 0
     with open(file, 'r', encoding='utf-8') as file_object:
         for line in file_object:
@@ -42,7 +42,7 @@ def word_finder(keyword):
 
 def update_show(show, episode):
     """ Actualizar una lista de shows. """
-    archivo = r'C:\Users\PRossi\DOCSBACKUP\current\shows.txt'
+    archivo = r'C:\Users\PRossi\documents-backup\current\shows.txt'
     try:
         with open(archivo, encoding= "utf-8") as file_object:
             lineas= file_object.readlines()
@@ -87,6 +87,7 @@ def open_skyrim():
     path = r"C:\Archivos\The Elder Scrolls V Skyrim Legendary Edition\Skyrim.exe" 
     subprocess.run([path])
     return "Abriendo Skyrim..."
+    #y cerrar el coso
 
 def open_farcry():
     path = r"C:\Program Files (x86)\Far Cry 3 Complete Collection\Far Cry 3\bin\FC3Updater.exe" 
