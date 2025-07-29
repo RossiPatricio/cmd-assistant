@@ -1,6 +1,6 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-import requests, time, subprocess, os
+import time, psutil
 
 def add(result, update):
     """ Agregar lineas a un archivo txt. """
@@ -82,4 +82,34 @@ def get_face(search):
     except Exception as e:
         return(f'Error:{e}')
 
-# random, temp, download
+# SYSTEM 
+
+def get_system_info():
+    """Devuelve información general del sistema."""
+    info = {
+        'CPU Cores': psutil.cpu_count(logical=True),
+        'CPU Frequency': f"{psutil.cpu_freq().current:.2f} MHz",
+        'Total Memory': f"{psutil.virtual_memory().total / (1024**3):.2f} GB",
+        'Disk Total': f"{psutil.disk_usage('/').total / (1024**3):.2f} GB",
+    }
+    return '\n'.join([f"{key}: {value}" for key, value in info.items()])
+
+def get_cpu_usage():
+    """Devuelve el porcentaje de uso de CPU."""
+    return f"CPU Usage: {psutil.cpu_percent(interval=1)}%"
+
+def get_memory_usage():
+    """Devuelve el uso de memoria RAM."""
+    memory = psutil.virtual_memory()
+    return f"Memory Usage: {memory.percent}% ({memory.used / (1024**3):.2f} GB / {memory.total / (1024**3):.2f} GB)"
+
+def get_disk_usage():
+    """Devuelve el uso del disco duro."""
+    disk = psutil.disk_usage('/')
+    return f"Disk Usage: {disk.percent}% ({disk.used / (1024**3):.2f} GB / {disk.total / (1024**3):.2f} GB)"
+
+def get_network_usage():
+    counters = psutil.net_io_counters()
+    sent    = counters.bytes_sent
+    recv    = counters.bytes_recv
+    return f"Enviados: {sent/1024/1024:.2f} MB  Recibidos: {recv/1024/1024:.2f} MB"

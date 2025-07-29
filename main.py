@@ -1,6 +1,5 @@
-import os, time, subprocess
+import os, subprocess
 from functions import *
-from system import *
 
 software_list = {
     'vscode' : r"C:\Users\PRossi\AppData\Local\Programs\Microsoft VS Code\Code.exe",
@@ -16,31 +15,31 @@ folder_list = {
     'lists' : 'C:/Users/PRossi/documents-backup/lists'
 }
 
+commands = {
+    'q': 'exit',
+    'cls': 'clear',
+    'system': 'system info',
+    'system -a': 'full system info',
+    "ram-disk-cpu": 'hardware info',
+    'help folders': 'folder list',
+    'movie' : 'is movie in list?',
+    'add' : 'add notes',
+    'show': 'updates a list of shows',
+    'get face -name': "shows wikipedia image",
+}
+
 def main():
     print('Command-Line Assistant')
     print('Type -help- for cmds')
     while True:
-        cmd = input('C:/user>').strip().lower()
+        cmd = input('C:/users/PRossi>').strip().lower()
 
         if cmd == 'q':
             break
 
         if cmd == 'help':
-            commands = {
-                'q': 'exit',
-                'cls': 'clear',
-                'system': 'system info',
-                'system -a': 'full system info',
-                "ram-disk-cpu": 'hardware info',
-                'help folders': 'folder list',
-                'movie' : 'is movie in list?',
-                'add' : 'add notes',
-                'show': 'updates a list of shows',
-                'get face -name': "shows wikipedia image",
-            }
             print()
             print('Actions:')
-            print()
             for command, use in commands.items():
                 print(f'{command}: {use}')
             print()
