@@ -1,6 +1,20 @@
-import os, time
+import os, time, subprocess
 from functions import *
 from system import *
+
+software_list = {
+    'vscode' : r"C:\Users\PRossi\AppData\Local\Programs\Microsoft VS Code\Code.exe",
+}
+
+game_list = {
+    'skyrim' : r"C:\Archivos\The Elder Scrolls V Skyrim Legendary Edition\Skyrim.exe",
+    'samp' : r"C:\Archivos\ASD+\samp.exe"
+}
+
+folder_list = {
+    'docs' : 'C:/Users/PRossi/documents-backup',
+    'lists' : 'C:/Users/PRossi/documents-backup/lists'
+}
 
 def main():
     print('Command-Line Assistant')
@@ -60,24 +74,21 @@ def main():
             episode = input('Episode: ')
             print(update_show(show, episode))
             
-        software_list = {
-            'vscode' : r"C:\Users\PRossi\AppData\Local\Programs\Microsoft VS Code\Code.exe",
-        }
-        
-        game_list = {
-            'skyrim' : r"C:\Archivos\The Elder Scrolls V Skyrim Legendary Edition\Skyrim.exe",
-        }
-        
         if cmd in software_list:
-            open_software(software_list[cmd])
+            subprocess.Popen([software_list[cmd]])
+            os._exit(0)
 
         if cmd in game_list:
-            open_software(game_list[cmd])
+            subprocess.Popen([game_list[cmd]])
+            os._exit(0)
+
+        if cmd in folder_list:
+            os.system(f'start {folder_list[cmd]}')
+            os._exit(0)
 
         if cmd.startswith('get face '):
             search = cmd[len('get face '):].strip()
             print(get_face(search))
-            
 
         # System
 
@@ -101,50 +112,6 @@ def main():
 
         if cmd == 'net':
             print(f'Network: {get_network_usage()}')
-
-        # Folders
-
-        if cmd == 'help folders':
-            commands = {
-                'docs': 'Documentos',
-                'lists': 'Lists'}
-            print()
-            for command, use in commands.items():
-                print(f'{command}: {use}')
-            print()
-
-        folders = {
-            'docs' : 'C:/Users/PRossi/documents-backup',
-            'lists' : 'C:/Users/PRossi/documents-backup/lists'}
-
-        if cmd in folders.keys():
-            os.system(f'start {folders[cmd]}')
-
-        # Download
-
-        if cmd.startswith('download game '):
-            gamezfull = 'https://www.gamezfull.com/?s='
-            zonaleros = 'https://www.zona-leros.com/search?q='
-            search = cmd[len('download game '):].strip()
-            title = search.split(' ')
-            game = ('+').join(title)
-            print(f'Gamezfull: {gamezfull+game}')
-            print(f'Zona-Leros: {zonaleros+game}')
-
-        if cmd == 'help download':
-            commands = {
-                'download game -title-': 'Gamess',
-                'download song/album -title-': 'Music',
-                'download movie -title-': 'Movies'}
-            print()
-            for command, use in commands.items():
-                print(f'{command}: {use}')
-            print()   
-
-        # Watch
-
-        if cmd.startswith('watch movie '):
-            return f'Searching {cmd}'
 
 if __name__ == '__main__':
     main()

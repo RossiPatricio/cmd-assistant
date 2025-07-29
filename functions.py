@@ -82,12 +82,4 @@ def get_face(search):
     except Exception as e:
         return(f'Error:{e}')
 
-def open_game(path):
-    subprocess.Popen([path], shell=True)
-    os._exit(0)
-
-def open_software(path):
-    subprocess.Popen([path], shell=True)
-    os._exit(0)
-
 # random, temp, download
