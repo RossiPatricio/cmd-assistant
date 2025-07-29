@@ -53,9 +53,10 @@ def update_show(show, episode):
 
     for i in range(len(lineas)):   
         if show.lower() in lineas[i].lower():
-            lineas[i] = f"{show.title()}: {episode.title()}\n" 
-            return(f'Actualizado: "{show.title()}: {episode.title()}"')
-            break
+            # : episode
+            # how to?
+            f"{episode.title()}\n" 
+            return(lineas[i])
     else:
         lineas.append(f"{show.title()}: {episode.title()}\n" )
         return(f'Agregado: "{show.title()}: {episode.title()}"')

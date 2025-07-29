@@ -43,8 +43,20 @@ def main():
             result = input('Any list?: ')
             print(add(result, keyword))
 
+        if cmd.startswith('add movie '):
+                keyword = cmd[len('add movie '):].strip()
+                print(add('movie', keyword))
+
         if cmd == 'movie':
-            keyword= input('Search: ')
+            while True:
+                keyword= input('Search: ')
+                if keyword == 'q':
+                    break
+                else: 
+                    print(word_finder(keyword))
+
+        if cmd.startswith('movie '):
+            keyword = cmd[len('movie '):].strip()
             print(word_finder(keyword))
 
         if cmd == 'games':
@@ -106,14 +118,8 @@ def main():
             print()
 
         folders = {
-            'docs' : 'C:/Users/PRossi/DOCSBACKUP',
-            'lists' : 'C:/Users/PRossi/DOCSBACKUP/Lists'}
-        
-        if cmd == 'docs':
-            os.system('start C:/Users/PRossi/DOCSBACKUP')
-
-        if cmd == 'lists':
-            os.system('start C:/Users/PRossi/DOCSBACKUP/Lists')
+            'docs' : 'C:/Users/PRossi/documents-backup',
+            'lists' : 'C:/Users/PRossi/documents-backup/lists'}
 
         if cmd in folders.keys():
             os.system(f'start {folders[cmd]}')

@@ -8,5 +8,6 @@ yt dlp
 
 _____
 
+creo que esta vez si o si voy a tener que hacewr tests
 
 Autocompletado: Implementa sugerencias de comandos usando una librería como prompt_toolkit. Por ejemplo, al escribir do, podría sugerir download o docs.
