@@ -47,22 +47,18 @@ def update_show(show, episode):
         with open(archivo, encoding= "utf-8") as file_object:
             lineas= file_object.readlines()
     except FileNotFoundError:
-        return('Archivo no encontrado.')
+        print('Archivo no encontrado.')
     except Exception as e:
-        return(f'Error: {e}')
+        print(f'Error: {e}')
 
     for i in range(len(lineas)):   
         if show.lower() in lineas[i].lower():
-            # : episode
-            # how to?
-            f"{episode.title()}\n" 
-            return(lineas[i])
-    else:
-        lineas.append(f"{show.title()}: {episode.title()}\n" )
-        return(f'Agregado: "{show.title()}: {episode.title()}"')
-
+            current_show = lineas[i].split(":")[0]
+            lineas[i] = f"{current_show}: {episode}\n"
+    
     with open(archivo, 'w', encoding="utf-8") as file_object:
         file_object.writelines(lineas)
+        return "Archivo actualizado."
 
 def get_face(search):
     try:
