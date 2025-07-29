@@ -17,16 +17,12 @@ def main():
                 'cls': 'clear',
                 'system': 'system info',
                 'system -a': 'full system info',
-                'help folders': 'folder list',
-                'help download': 'download info',
-                'movie' : 'is movie in list?', 
-                'add' : 'add notes', 
-                'youtube' : 'yt url extractor',
-                'show': 'updates a list of shows',
-                'games': 'game list',
-                'get face -name-': "shows wikipedia image",
                 "ram-disk-cpu": 'hardware info',
-                'download': 'download stuff',
+                'help folders': 'folder list',
+                'movie' : 'is movie in list?',
+                'add' : 'add notes',
+                'show': 'updates a list of shows',
+                'get face -name': "shows wikipedia image",
             }
             print()
             print('Actions:')
@@ -59,29 +55,29 @@ def main():
             keyword = cmd[len('movie '):].strip()
             print(word_finder(keyword))
 
-        if cmd == 'games':
-            commands = {
-                'skyrim' : 'The Elder Scrolls V: Skyrim', 
-                'far cry' : 'Far Cry 3'}
-            print()
-            for command, use in commands.items():
-                print(f'{command}: {use}')
-            print()
-
         if cmd == 'show':
             show = input('Show: ')
             episode = input('Episode: ')
             print(update_show(show, episode))
+            
+        software_list = {
+            'vscode' : r"C:\Users\PRossi\AppData\Local\Programs\Microsoft VS Code\Code.exe",
+        }
+        
+        game_list = {
+            'skyrim' : r"C:\Archivos\The Elder Scrolls V Skyrim Legendary Edition\Skyrim.exe",
+        }
+        
+        if cmd in software_list:
+            open_software(software_list[cmd])
 
-        if cmd == 'skyrim':
-            open_skyrim()
-
-        if cmd == 'far cry':
-            open_farcry()
+        if cmd in game_list:
+            open_software(game_list[cmd])
 
         if cmd.startswith('get face '):
             search = cmd[len('get face '):].strip()
             print(get_face(search))
+            
 
         # System
 

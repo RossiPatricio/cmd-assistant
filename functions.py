@@ -1,6 +1,6 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-import requests, time, subprocess
+import requests, time, subprocess, os
 
 def add(result, update):
     """ Agregar lineas a un archivo txt. """
@@ -49,16 +49,18 @@ def update_show(show, episode):
     except FileNotFoundError:
         print('Archivo no encontrado.')
     except Exception as e:
-        print(f'Error: {e}')
+        print(f'Error desconocido: {e}')
 
+    update = ''
     for i in range(len(lineas)):   
         if show.lower() in lineas[i].lower():
             current_show = lineas[i].split(":")[0]
             lineas[i] = f"{current_show}: {episode}\n"
+            update = lineas[i]
     
     with open(archivo, 'w', encoding="utf-8") as file_object:
         file_object.writelines(lineas)
-        return "Archivo actualizado."
+        return f'Actualizado: {update.title()}({archivo})'
 
 def get_face(search):
     try:
@@ -80,15 +82,12 @@ def get_face(search):
     except Exception as e:
         return(f'Error:{e}')
 
-def open_skyrim():
-    path = r"C:\Archivos\The Elder Scrolls V Skyrim Legendary Edition\Skyrim.exe" 
-    subprocess.run([path])
-    return "Abriendo Skyrim..."
-    #y cerrar el coso
+def open_game(path):
+    subprocess.Popen([path], shell=True)
+    os._exit(0)
 
-def open_farcry():
-    path = r"C:\Program Files (x86)\Far Cry 3 Complete Collection\Far Cry 3\bin\FC3Updater.exe" 
-    subprocess.run([path])
-    return "Abriendo Far Cry 3..."
+def open_software(path):
+    subprocess.Popen([path], shell=True)
+    os._exit(0)
 
 # random, temp, download
