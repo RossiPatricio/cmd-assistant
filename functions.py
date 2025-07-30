@@ -1,18 +1,22 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-import time, psutil
+import time, psutil, os
+
+movies_list = r'C:\Users\PRossi\documents-backup\Lists\Movies.txt'
+music_folder = r'C:\Users\PRossi\Music'
 
 def add(result, update):
     """ Agregar lineas a un archivo txt. """
     my_lists = { 
-    'websites': r'C:\Users\PRossi\documents-backup\Lists\Websites.txt',
-    'website': r'C:\Users\PRossi\documents-backup\Lists\Websites.txt',
-    'movies': r'C:\Users\PRossi\documents-backup\Lists\Movies.txt',
-    'movie': r'C:\Users\PRossi\documents-backup\Lists\Movies.txt',
-    'actor': r'C:\Users\PRossi\documents-backup\Lists\Actors.txt',
-    'names': r'C:\Users\PRossi\documents-backup\Lists\Names.txt',
-    'name': r'C:\Users\PRossi\documents-backup\Lists\Names.txt',
-    'python': r'C:\Users\PRossi\documents-backup\Python.txt'}
+        'websites': r'C:\Users\PRossi\documents-backup\Lists\Websites.txt',
+        'website': r'C:\Users\PRossi\documents-backup\Lists\Websites.txt',
+        'movies': movies_list,
+        'movie': movies_list,
+        'actor': r'C:\Users\PRossi\documents-backup\Lists\Actors.txt',
+        'names': r'C:\Users\PRossi\documents-backup\Lists\Names.txt',
+        'name': r'C:\Users\PRossi\documents-backup\Lists\Names.txt',
+        'python': r'C:\Users\PRossi\documents-backup\Python.txt'
+    }
 
     if result in my_lists:
         archivo = my_lists[result]
@@ -30,15 +34,14 @@ def add(result, update):
 
 def word_finder(keyword):
     """" Buscar y contar palabras en archivos .txt """ 
-    file = r'C:\Users\PRossi\documents-backup\Lists\Movies.txt'
     count= 0
-    with open(file, 'r', encoding='utf-8') as file_object:
+    with open(movies_list, 'r', encoding='utf-8') as file_object:
         for line in file_object:
             count += line.lower().count(keyword.lower())
         if count == 1:
             return f'La palabra "{keyword.title()}" aparece {count} vez.'
         else:
-            return f'La palabra "{keyword.title()}" aparece {count} veces en el archivo"{file}".'
+            return f'La palabra "{keyword.title()}" aparece {count} veces en el archivo"{movies_list}".'
 
 def update_show(show, episode):
     """ Actualizar una lista de shows. """
@@ -113,3 +116,11 @@ def get_network_usage():
     sent    = counters.bytes_sent
     recv    = counters.bytes_recv
     return f"Enviados: {sent/1024/1024:.2f} MB  Recibidos: {recv/1024/1024:.2f} MB"
+
+music_list = {}
+
+for filename in os.listdir(music_folder):
+    if filename.endswith(('.mp3', '.wav')):
+        name = os.path.splitext(filename)[0].lower()
+        path = os.path.join(music_folder, filename)
+        music_list[name] = path

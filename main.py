@@ -44,6 +44,20 @@ def main():
 
         if cmd == 'q':
             break
+        
+        if cmd.startswith('play '):
+            query = cmd[len('play '):].strip().lower()
+
+            # Búsqueda parcial
+            matches = [name for name in music_list if query in name]
+            
+            if matches:
+                # Si hay varias, elegí la primera
+                selected = matches[0]
+                print(f'Reproduciendo: {selected.title()}')
+                os.startfile(music_list[selected])
+            else:
+                print('Canción no encontrada.')
 
         if cmd == 'help':
             print()
