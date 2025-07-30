@@ -1,9 +1,8 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import time, psutil, os
+from main import music_folder, movie_list
 
-movies_list = r'C:\Users\PRossi\documents-backup\Lists\Movies.txt'
-music_folder = r'C:\Users\PRossi\Music'
 
 music_list = {}
 
@@ -18,8 +17,8 @@ def add(result, update):
     my_lists = { 
         'websites': r'C:\Users\PRossi\documents-backup\Lists\Websites.txt',
         'website': r'C:\Users\PRossi\documents-backup\Lists\Websites.txt',
-        'movies': movies_list,
-        'movie': movies_list,
+        'movies': movie_list,
+        'movie': movie_list,
         'actor': r'C:\Users\PRossi\documents-backup\Lists\Actors.txt',
         'names': r'C:\Users\PRossi\documents-backup\Lists\Names.txt',
         'name': r'C:\Users\PRossi\documents-backup\Lists\Names.txt',
@@ -43,13 +42,13 @@ def add(result, update):
 def word_finder(keyword):
     """" Buscar y contar palabras en archivos .txt """ 
     count= 0
-    with open(movies_list, 'r', encoding='utf-8') as file_object:
+    with open(movie_list, 'r', encoding='utf-8') as file_object:
         for line in file_object:
             count += line.lower().count(keyword.lower())
         if count == 1:
             return f'La palabra "{keyword.title()}" aparece {count} vez.'
         else:
-            return f'La palabra "{keyword.title()}" aparece {count} veces en el archivo"{movies_list}".'
+            return f'La palabra "{keyword.title()}" aparece {count} veces en el archivo"{movie_list}".'
 
 def update_show(show, episode):
     """ Actualizar una lista de shows. """

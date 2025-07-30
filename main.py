@@ -1,6 +1,10 @@
 import os, subprocess
 from functions import *
 
+list_folder = r'C:\Users\PRossi\documents-backup\Lists'
+music_folder = r'C:\Users\PRossi\Music'
+movie_list = r'C:\Users\PRossi\documents-backup\Lists\Movies.txt'
+
 software_list = {
     'vscode' : r'C:\Users\PRossi\AppData\Local\Programs\Microsoft VS Code\Code.exe',
 }
@@ -11,16 +15,16 @@ game_list = {
 }
 
 folder_list = {
-    'docs' : 'C:/Users/PRossi/documents-backup',
-    'lists' : 'C:/Users/PRossi/documents-backup/lists',
+    'docs' : r'C:/Users/PRossi/documents-backup',
+    'lists' : r'C:/Users/PRossi/documents-backup/lists',
 }
 
 doc_list= {
-    'movies': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Movies.txt',
-    'cartoons': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Cartoons.txt',
-    'shows': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Shows.txt',
-    'actors': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Actors.txt',
-    'games': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Games.txt',
+    'movies': movie_list,
+    'cartoons': fr'{list_folder}\Cartoons.txt',
+    'shows': fr'{list_folder}\Shows.txt',
+    'actors': fr'{list_folder}\Actors.txt',
+    'games': fr'{list_folder}\Games.txt',
 }
 
 command_list = {
@@ -34,6 +38,7 @@ command_list = {
     'add' : 'add notes',
     'show': 'updates a list of shows',
     'get face -name': "shows wikipedia image",
+    'play -song': "..."
 }
 
 def main():
