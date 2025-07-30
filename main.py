@@ -2,12 +2,12 @@ import os, subprocess
 from functions import *
 
 software_list = {
-    'vscode' : r"C:\Users\PRossi\AppData\Local\Programs\Microsoft VS Code\Code.exe",
+    'vscode' : r'C:\Users\PRossi\AppData\Local\Programs\Microsoft VS Code\Code.exe',
 }
 
 game_list = {
-    'skyrim' : r"C:\Archivos\The Elder Scrolls V Skyrim Legendary Edition\Skyrim.exe",
-    'samp' : r"C:\Archivos\ASD+\samp.exe"
+    'skyrim' : r'C:\Archivos\The Elder Scrolls V Skyrim Legendary Edition\Skyrim.exe',
+    'samp' : r'C:\Archivos\ASD+\samp.exe'
 }
 
 folder_list = {
@@ -15,7 +15,15 @@ folder_list = {
     'lists' : 'C:/Users/PRossi/documents-backup/lists'
 }
 
-commands = {
+list_list= {
+    'movies': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Movies.txt',
+    'cartoons': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Cartoons.txt',
+    'shows': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Shows.txt',
+    'actors': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Actors.txt',
+    'games': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Games.txt'
+}
+
+command_list = {
     'q': 'exit',
     'cls': 'clear',
     'system': 'system info',
@@ -32,7 +40,7 @@ def main():
     print('Command-Line Assistant')
     print('Type -help- for cmds')
     while True:
-        cmd = input('C:/users/PRossi>').strip().lower()
+        cmd = input('C:/Users/PRossi>').strip().lower()
 
         if cmd == 'q':
             break
@@ -40,12 +48,15 @@ def main():
         if cmd == 'help':
             print()
             print('Actions:')
-            for command, use in commands.items():
+            for command, use in command_list.items():
                 print(f'{command}: {use}')
             print()
 
         if cmd == 'cls':
             os.system('cls')
+
+        if cmd in list_list:
+            os.system(f'type {list_list[cmd]}')
 
         if cmd == 'add':
             keyword = input('Keyword: ')
