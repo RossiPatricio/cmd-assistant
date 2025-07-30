@@ -7,20 +7,20 @@ software_list = {
 
 game_list = {
     'skyrim' : r'C:\Archivos\The Elder Scrolls V Skyrim Legendary Edition\Skyrim.exe',
-    'samp' : r'C:\Archivos\ASD+\samp.exe'
+    'samp' : r'C:\Archivos\ASD+\samp.exe',
 }
 
 folder_list = {
     'docs' : 'C:/Users/PRossi/documents-backup',
-    'lists' : 'C:/Users/PRossi/documents-backup/lists'
+    'lists' : 'C:/Users/PRossi/documents-backup/lists',
 }
 
-list_list= {
+doc_list= {
     'movies': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Movies.txt',
     'cartoons': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Cartoons.txt',
     'shows': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Shows.txt',
     'actors': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Actors.txt',
-    'games': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Games.txt'
+    'games': 'C:\\Users\\PRossi\\documents-backup\\Lists\\Games.txt',
 }
 
 command_list = {
@@ -44,6 +44,36 @@ def main():
 
         if cmd == 'q':
             break
+
+        if cmd == 'help':
+            print()
+            print('Actions:')
+            for command, use in command_list.items():
+                print(f'{command}: {use}')
+            print()
+
+        if cmd == 'cls':
+            os.system('cls')
+
+        if cmd in software_list:
+            subprocess.Popen([software_list[cmd]])
+            os._exit(0)
+
+        if cmd in folder_list:
+            os.system(f'start {folder_list[cmd]}')
+            os._exit(0)
+    
+        if cmd.startswith('get face '):
+            search = cmd[len('get face '):].strip()
+            print(get_face(search))
+
+        # Games
+    
+        if cmd in game_list:
+            subprocess.Popen([game_list[cmd]])
+            os._exit(0)
+
+        # Music
         
         if cmd.startswith('play '):
             query = cmd[len('play '):].strip().lower()
@@ -59,24 +89,18 @@ def main():
             else:
                 print('Canción no encontrada.')
 
-        if cmd == 'help':
-            print()
-            print('Actions:')
-            for command, use in command_list.items():
-                print(f'{command}: {use}')
-            print()
-
-        if cmd == 'cls':
-            os.system('cls')
-
-        if cmd in list_list:
-            os.system(f'type {list_list[cmd]}')
-
+        # DOCS 
+        
         if cmd == 'add':
             keyword = input('Keyword: ')
             result = input('Any list?: ')
             print(add(result, keyword))
 
+        if cmd in doc_list:
+            os.system(f'type {doc_list[cmd]}')
+
+        # Movies / Shows
+        
         if cmd.startswith('add movie '):
                 keyword = cmd[len('add movie '):].strip()
                 print(add('movie', keyword))
@@ -97,22 +121,6 @@ def main():
             show = input('Show: ')
             episode = input('Episode: ')
             print(update_show(show, episode))
-            
-        if cmd in software_list:
-            subprocess.Popen([software_list[cmd]])
-            os._exit(0)
-
-        if cmd in game_list:
-            subprocess.Popen([game_list[cmd]])
-            os._exit(0)
-
-        if cmd in folder_list:
-            os.system(f'start {folder_list[cmd]}')
-            os._exit(0)
-
-        if cmd.startswith('get face '):
-            search = cmd[len('get face '):].strip()
-            print(get_face(search))
 
         # System
 
@@ -136,6 +144,7 @@ def main():
 
         if cmd == 'net':
             print(f'Network: {get_network_usage()}')
+
 
 if __name__ == '__main__':
     main()

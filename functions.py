@@ -5,6 +5,14 @@ import time, psutil, os
 movies_list = r'C:\Users\PRossi\documents-backup\Lists\Movies.txt'
 music_folder = r'C:\Users\PRossi\Music'
 
+music_list = {}
+
+for filename in os.listdir(music_folder):
+    if filename.endswith(('.mp3', '.wav')):
+        name = os.path.splitext(filename)[0].lower()
+        path = os.path.join(music_folder, filename)
+        music_list[name] = path
+
 def add(result, update):
     """ Agregar lineas a un archivo txt. """
     my_lists = { 
@@ -116,11 +124,3 @@ def get_network_usage():
     sent    = counters.bytes_sent
     recv    = counters.bytes_recv
     return f"Enviados: {sent/1024/1024:.2f} MB  Recibidos: {recv/1024/1024:.2f} MB"
-
-music_list = {}
-
-for filename in os.listdir(music_folder):
-    if filename.endswith(('.mp3', '.wav')):
-        name = os.path.splitext(filename)[0].lower()
-        path = os.path.join(music_folder, filename)
-        music_list[name] = path
