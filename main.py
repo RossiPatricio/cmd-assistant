@@ -231,11 +231,16 @@ def main():
         elif cmd.startswith('!'):
             os.system(cmd[1:].strip())
 
-        elif cmd.startswith('yt '):
+        elif cmd.startswith('yt mp3 '):
             url = cmd_raw[len('yt '):].strip()
             output_path = fr"{music_folder}\%(title)s.%(ext)s"
             mp3 = f'yt-dlp -x --audio-format mp3 -o {output_path} {url}'
             os.system(mp3)
+
+        elif cmd.startswith('yt v '):
+            url = cmd_raw[len('yt v '):].strip()
+            video = f'yt-dlp -S "res:1080,fps" {url}'
+            os.system(video)  
             
         elif cmd == 'system':
             print(get_system_info())
