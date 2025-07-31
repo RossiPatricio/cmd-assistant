@@ -1,7 +1,11 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 import time, psutil, os
-from main import music_folder, movie_list
+
+
+music_folder = r'C:\Users\PRossi\Music'
+movie_list = r'C:\Users\PRossi\documents-backup\Lists\Movies.txt'
+
 
 
 music_list = {}

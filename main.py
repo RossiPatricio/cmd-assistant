@@ -1,5 +1,7 @@
-import os, subprocess
+import pyfiglet
 from functions import *
+import os, subprocess
+from colorama import init, Fore, Style
 
 list_folder = r'C:\Users\PRossi\documents-backup\Lists'
 music_folder = r'C:\Users\PRossi\Music'
@@ -42,8 +44,10 @@ command_list = {
 }
 
 def main():
-    print('Command-Line Assistant')
-    print('Type -help- for cmds')
+    init(autoreset=True)
+    banner = pyfiglet.figlet_format("CMDAssistant")
+    print(Fore.CYAN + banner)
+    
     while True:
         cmd = input('C:/Users/PRossi>').strip().lower()
 
@@ -59,6 +63,7 @@ def main():
 
         if cmd == 'cls':
             os.system('cls')
+            print(Fore.CYAN + banner)
 
         if cmd in software_list:
             subprocess.Popen([software_list[cmd]])
@@ -67,13 +72,13 @@ def main():
         if cmd in folder_list:
             os.system(f'start {folder_list[cmd]}')
             os._exit(0)
-    
+
         if cmd.startswith('get face '):
             search = cmd[len('get face '):].strip()
             print(get_face(search))
 
         # Games
-    
+
         if cmd in game_list:
             subprocess.Popen([game_list[cmd]])
             os._exit(0)
