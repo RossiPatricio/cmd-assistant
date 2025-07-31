@@ -16,8 +16,38 @@ colorama
 --------
 
 
+
+2. Manejo de comandos
+
+Estás usando una larga cadena de elif cmd == ... 
+, lo cual puede volverse difícil de mantener al crecer.
+
+Sugerencia: podrías usar un patrón “comando → función” (un diccionario donde la clave es el comando y el valor la función a invocar). O bien adoptar una librería como argparse o click para centralizar el parsing y la ayuda.
+
+
+
+. Organización de las listas de texto
+
+Tienes varios archivos .txt para listas (películas, shows, webs, etc.) 
+.
+
+Sugerencia: podrías migrar esos datos a un pequeño SQLite o incluso a JSON, lo que permitiría búsquedas más rápidas, esquemas más ricos (por ejemplo, títulos+metadatos) y consultas más flexibles.
+
+
+
+ Testing y calidad de código
+
+Para escalar el proyecto, convendría agregar tests unitarios con pytest, especialmente para las funciones puras de functions.py (p. ej. word_finder, add, get_system_info).
+
+Esto te dará confianza al refactorizar y mantener el código.
+
+
+
+
+
 funcion python text-speech
 https://www.youtube.com/shorts/KW9EUCzAYMk?feature=share
 
 https://codeburst.io/building-beautiful-command-line-interfaces-with-python-26c7e1bb54df
+
 

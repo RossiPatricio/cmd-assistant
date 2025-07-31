@@ -1,6 +1,6 @@
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-import time, psutil, os
+import time, psutil, os, sys
 
 music_folder = r'C:\Users\PRossi\Music'
 movie_list = r'C:\Users\PRossi\documents-backup\Lists\Movies.txt'
@@ -13,6 +13,13 @@ for filename in os.listdir(music_folder):
         path = os.path.join(music_folder, filename)
         music_list[name] = path
 
+def reiniciar_programa():
+    print("Reiniciando..\n")
+    time.sleep(1)
+    os.system("cls")
+    python = sys.executable
+    os.execl(python, python, *sys.argv)
+
 def add(result, update):
     """ Agregar lineas a un archivo txt. """
     my_lists = { 
@@ -23,7 +30,11 @@ def add(result, update):
         'actor': r'C:\Users\PRossi\documents-backup\Lists\Actors.txt',
         'names': r'C:\Users\PRossi\documents-backup\Lists\Names.txt',
         'name': r'C:\Users\PRossi\documents-backup\Lists\Names.txt',
-        'python': r'C:\Users\PRossi\documents-backup\Python.txt'
+        'python': r'C:\Users\PRossi\documents-backup\Python.txt',
+        'cartoon': r'C:\Users\PRossi\documents-backup\Lists\Cartoons.txt',
+        'cartoons': r'C:\Users\PRossi\documents-backup\Lists\Cartoons.txt',
+        'book': r'C:\Users\PRossi\documents-backup\Lists\Books.txt',
+        'books': r'C:\Users\PRossi\documents-backup\Lists\Books.txt',
     }
 
     if result in my_lists:

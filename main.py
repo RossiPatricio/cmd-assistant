@@ -54,12 +54,14 @@ def main():
         cmd_raw = input('C:/Users/PRossi>').strip()
         cmd = cmd_raw.lower()
 
+        # Menu
+
         if cmd == "":
             os.system("cls")
             print(Fore.CYAN + banner)
             opcion = inquirer.select(
                 message="¿Qué querés hacer?",
-                choices=["Back", "Games", "System", "Help", "Exit"]
+                choices=["Back", "Games", "Shows", "Add","System", "Help", "Exit"]
             ).execute()
 
             if opcion == "System":
@@ -72,7 +74,8 @@ def main():
                         time.sleep(1)
                 except KeyboardInterrupt:
                     print("\nSaliendo del modo System.")
-                            
+                    
+       
             if opcion == "Games":
                 juego = inquirer.select(
                 message="Elegí un juego:",
@@ -89,15 +92,47 @@ def main():
                     subprocess.Popen([game_list['samp']])
                 elif juego == "↩ Volver":
                     continue
-                
+ 
+            elif opcion == "Shows":
+                show = input('Show: ')
+                episode = input('Episode: ')
+                print(update_show(show, episode))             
+     
+            if opcion == "Add":
+                document = inquirer.select(
+                message="Elegí un Documento:",
+                choices=[
+                    "Movies",
+                    "Cartoons",
+                    "Books",
+                    "Any", 
+                    "↩ Volver"
+                ]
+                ).execute()
+
+                if document == "Movies":
+                    movie = input('Movie: ')
+                    print(add('movie', movie))
+                elif document == "Cartoons":
+                    cartoon = input('Cartoon: ')
+                    print(add('cartoon', cartoon))
+                elif document == "↩ Volver":
+                    continue
+                elif document == "Any":
+                    any = input('Any: ')
+                    print(add('any', any))
+                elif document == "↩ Volver":
+                    continue 
+                elif document == "Books":
+                    book = input('Book: ')
+                    print(add('book', book))
+                elif document == "↩ Volver":
+                    continue          
+
             elif opcion == "Back":
                 os.system("cls")
                 print(Fore.CYAN + banner)
-                
-            elif opcion == "Back":
-                os.system("cls")
-                print(Fore.CYAN + banner)
-                
+    
             elif opcion == "Help":
                 os.system("cls")
                 print(Fore.CYAN + banner)
@@ -106,6 +141,8 @@ def main():
                     print(f"{k} -> {v}")
             elif opcion == "Exit":
                 break
+
+        # asd
 
         elif cmd == "q":
             break
@@ -118,7 +155,7 @@ def main():
             print('\nComandos disponibles:')
             for k, v in command_list.items():
                 print(f"{k} -> {v}")
-        
+
         elif cmd in software_list:
             subprocess.Popen([software_list[cmd]])
             #os._exit(0)
@@ -130,7 +167,11 @@ def main():
             search = cmd[len('get face '):].strip()
             print(get_face(search))
 
-        # DOCS 
+        elif cmd == "reiniciar":
+            reiniciar_programa()
+            os.system("cls")
+
+        # Docs
         
         elif cmd == 'add':
             keyword = input('Keyword: ')
@@ -138,7 +179,7 @@ def main():
             print(add(result, keyword))
 
         elif cmd in doc_list:
-            os.system(f'type {doc_list[cmd]}')
+            os.system(f'start {doc_list[cmd]}')
 
         # Games
 
