@@ -1,39 +1,23 @@
 personas (classes?)
 contactos
-
 send whastapp
+______
+
+Autocompletado: 
+sugerencias de comandos usando una librería como prompt_toolkit. 
+Por ejemplo, al escribir do, podría sugerir download o docs.
+
+------
+packages
+
+pyfiglet
+InquirerPy
+colorama 
+--------
+
 
 funcion python text-speech
 https://www.youtube.com/shorts/KW9EUCzAYMk?feature=share
 
-______
-
-
-Autocompletado: Implementa sugerencias de comandos usando una librería como prompt_toolkit. Por ejemplo, al escribir do, podría sugerir download o docs.
-
-
-
-______
-
 https://codeburst.io/building-beautiful-command-line-interfaces-with-python-26c7e1bb54df
-
-CLI INTERFACE
-
-
-Options
-
--PyFiglet
-
--PyInquirer
-
-
-
-
-
-
-
-
-
-
-
 

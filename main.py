@@ -1,4 +1,5 @@
 import pyfiglet
+from InquirerPy import inquirer
 from functions import *
 import os, subprocess
 from colorama import init, Fore, Style
@@ -17,6 +18,7 @@ game_list = {
 }
 
 folder_list = {
+    #
     'docs' : r'C:/Users/PRossi/documents-backup',
     'lists' : r'C:/Users/PRossi/documents-backup/lists',
 }
@@ -47,45 +49,97 @@ def main():
     init(autoreset=True)
     banner = pyfiglet.figlet_format("CMDAssistant")
     print(Fore.CYAN + banner)
-    
+
     while True:
-        cmd = input('C:/Users/PRossi>').strip().lower()
+        cmd = input('C:/Users/PRossi>').lower()
 
-        if cmd == 'q':
-            break
-
-        if cmd == 'help':
-            print()
-            print('Actions:')
-            for command, use in command_list.items():
-                print(f'{command}: {use}')
-            print()
-
-        if cmd == 'cls':
-            os.system('cls')
+        if cmd == "":
+            os.system("cls")
             print(Fore.CYAN + banner)
+            opcion = inquirer.select(
+                message="¿Qué querés hacer?",
+                choices=["Back", "Games", "System", "Help", "Exit"]
+            ).execute()
 
-        if cmd in software_list:
+            if opcion == "System":
+                print(get_system_info())
+                
+            if opcion == "Games":
+                juego = inquirer.select(
+                message="Elegí un juego:",
+                choices=[
+                    "Skyrim",
+                    "SAMP",
+                    "↩ Volver"
+                ]
+                ).execute()
+
+                if juego == "Skyrim":
+                    subprocess.Popen([game_list['skyrim']])
+                elif juego == "SAMP":
+                    subprocess.Popen([game_list['samp']])
+                elif juego == "↩ Volver":
+                    continue
+                
+            elif opcion == "Back":
+                os.system("cls")
+                print(Fore.CYAN + banner)
+                
+            elif opcion == "Back":
+                os.system("cls")
+                print(Fore.CYAN + banner)
+                
+            elif opcion == "Help":
+                os.system("cls")
+                print(Fore.CYAN + banner)
+                print('\nComandos disponibles:')
+                for k, v in command_list.items():
+                    print(f"{k} -> {v}")
+            elif opcion == "Exit":
+                break
+
+        elif cmd == "q":
+            break
+        
+        elif cmd == "cls":
+            os.system("cls")
+            print(Fore.CYAN + banner)
+            
+        elif cmd == "help":
+            print('\nComandos disponibles:')
+            for k, v in command_list.items():
+                print(f"{k} -> {v}")
+        
+        elif cmd in software_list:
             subprocess.Popen([software_list[cmd]])
-            os._exit(0)
-
-        if cmd in folder_list:
+            #os._exit(0)
+   
+        elif cmd in folder_list:
             os.system(f'start {folder_list[cmd]}')
-            os._exit(0)
-
-        if cmd.startswith('get face '):
+      
+        elif cmd.startswith('get face '):
             search = cmd[len('get face '):].strip()
             print(get_face(search))
 
+        # DOCS 
+        
+        elif cmd == 'add':
+            keyword = input('Keyword: ')
+            result = input('Any list?: ')
+            print(add(result, keyword))
+
+        elif cmd in doc_list:
+            os.system(f'type {doc_list[cmd]}')
+
         # Games
 
-        if cmd in game_list:
+        elif cmd in game_list:
             subprocess.Popen([game_list[cmd]])
-            os._exit(0)
-
+            os._exit(0)  
+            
         # Music
         
-        if cmd.startswith('play '):
+        elif cmd.startswith('play '):
             query = cmd[len('play '):].strip().lower()
 
             # Búsqueda parcial
@@ -99,23 +153,13 @@ def main():
             else:
                 print('Canción no encontrada.')
 
-        # DOCS 
-        
-        if cmd == 'add':
-            keyword = input('Keyword: ')
-            result = input('Any list?: ')
-            print(add(result, keyword))
-
-        if cmd in doc_list:
-            os.system(f'type {doc_list[cmd]}')
-
         # Movies / Shows
         
-        if cmd.startswith('add movie '):
+        elif cmd.startswith('add movie '):
                 keyword = cmd[len('add movie '):].strip()
                 print(add('movie', keyword))
 
-        if cmd == 'movie':
+        elif cmd == 'movie':
             while True:
                 keyword= input('Search: ')
                 if keyword == 'q':
@@ -123,38 +167,40 @@ def main():
                 else: 
                     print(word_finder(keyword))
 
-        if cmd.startswith('movie '):
+        elif cmd.startswith('movie '):
             keyword = cmd[len('movie '):].strip()
             print(word_finder(keyword))
 
-        if cmd == 'show':
+        elif cmd == 'show':
             show = input('Show: ')
             episode = input('Episode: ')
             print(update_show(show, episode))
 
         # System
+        
+        elif cmd.startswith('!'):
+            os.system(cmd[1:].strip())
 
-        if cmd == 'system':
+        elif cmd == 'system':
             print(get_system_info())
 
-        if cmd == 'ram':
+        elif cmd == 'ram':
             print(get_memory_usage())
 
-        if cmd == 'disk':
+        elif cmd == 'disk':
             print(get_disk_usage())
 
-        if cmd == 'cpu':
+        elif cmd == 'cpu':
             print(get_cpu_usage())
 
-        if cmd == 'system -a':
+        elif cmd == 'system -a':
             print(get_cpu_usage())
             print(get_memory_usage())
             print(get_disk_usage())
             print(f'Network: {get_network_usage()}')
 
-        if cmd == 'net':
+        elif cmd == 'net':
             print(f'Network: {get_network_usage()}')
-
 
 if __name__ == '__main__':
     main()
