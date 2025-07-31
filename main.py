@@ -1,7 +1,7 @@
 import pyfiglet
 from InquirerPy import inquirer
 from functions import *
-import os, subprocess
+import os, subprocess, time
 from colorama import init, Fore, Style
 
 list_folder = r'C:\Users\PRossi\documents-backup\Lists'
@@ -51,7 +51,8 @@ def main():
     print(Fore.CYAN + banner)
 
     while True:
-        cmd = input('C:/Users/PRossi>').lower()
+        cmd_raw = input('C:/Users/PRossi>').strip()
+        cmd = cmd_raw.lower()
 
         if cmd == "":
             os.system("cls")
@@ -62,8 +63,16 @@ def main():
             ).execute()
 
             if opcion == "System":
-                print(get_system_info())
-                
+                try:
+                    while True:
+                        os.system("cls")
+                        print(Fore.CYAN + banner)
+                        print(get_system_info())
+                        print(f'Network: {get_network_usage()}')
+                        time.sleep(1)
+                except KeyboardInterrupt:
+                    print("\nSaliendo del modo System.")
+                            
             if opcion == "Games":
                 juego = inquirer.select(
                 message="Elegí un juego:",
@@ -181,6 +190,12 @@ def main():
         elif cmd.startswith('!'):
             os.system(cmd[1:].strip())
 
+        elif cmd.startswith('yt '):
+            url = cmd_raw[len('yt '):].strip()
+            output_path = fr"{music_folder}\%(title)s.%(ext)s"
+            mp3 = f'yt-dlp -x --audio-format mp3 -o {output_path} {url}'
+            os.system(mp3)
+            
         elif cmd == 'system':
             print(get_system_info())
 
