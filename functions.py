@@ -104,7 +104,7 @@ def get_face(search):
     except Exception as e:
         return(f'Error:{e}')
 
-# SYSTEM 
+# SYSTEM
 
 def get_system_info():
     """Devuelve información general del sistema."""

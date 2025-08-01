@@ -4,6 +4,7 @@ from functions import *
 from duck_search import *
 import os, subprocess, time
 from colorama import init, Fore, Style
+from scraping_tomatoes import *
 
 list_folder = r'C:\Users\PRossi\documents-backup\Lists'
 music_folder = r'C:\Users\PRossi\Music'
@@ -78,9 +79,8 @@ def main():
                         print(f'Network: {get_network_usage()}')
                         time.sleep(1)
                 except KeyboardInterrupt:
-                    print("\nSaliendo del modo System.")
-                    
-       
+                    print("\nSaliendo del modo System.")           
+ 
             if opcion == "Games":
                 juego = inquirer.select(
                 message="Elegí un juego:",
@@ -102,7 +102,7 @@ def main():
                 show = input('Show: ')
                 episode = input('Episode: ')
                 print(update_show(show, episode))             
-     
+
             if opcion == "Add":
                 document = inquirer.select(
                 message="Elegí un Documento:",
@@ -137,27 +137,27 @@ def main():
             elif opcion == "Back":
                 os.system("cls")
                 print(Fore.CYAN + banner)
-    
+
             elif opcion == "Help":
                 os.system("cls")
                 print(Fore.CYAN + banner)
                 print('\nComandos disponibles:')
                 for k, v in command_list.items():
                     print(f"{k} -> {v}")
+
             elif opcion == "Exit":
                 break
 
             elif opcion == "Reset":
                 reiniciar_programa()
 
-
         elif cmd == "q":
             break
-   
+
         elif cmd == "cls":
             os.system("cls")
             print(Fore.CYAN + banner)
-       
+
         elif cmd == "help":
             print('\nComandos / Funciones')
             for k, v in command_list.items():
@@ -169,7 +169,7 @@ def main():
 
         elif cmd in folder_list:
             os.system(f'start {folder_list[cmd]}')
-  
+
         elif cmd.startswith('get face '):
             search = cmd[len('get face '):].strip()
             print(get_face(search))
@@ -181,7 +181,7 @@ def main():
             os.system(cmd[1:].strip())
 
         # Docs
-  
+
         elif cmd == 'add':
             keyword = input('Keyword: ')
             result = input('Any list?: ')
@@ -214,13 +214,30 @@ def main():
                     for i, song in enumerate(matches, start=1):
                         ls[i] = song
                         print(f'{i}- {song}')
-                    number = int(input("Select:"))
-                    print(f'Reproduciendo: {ls[number]}')
-                    os.startfile(music_list[ls[number]])
+                    number = int(input("Select:")).strip()
+                    if number == '':
+                        pass
+                    else:
+                        print(f'Reproduciendo: {ls[number]}')
+                        os.startfile(music_list[ls[number]])
+                        
             else:
                 print('Canción no encontrada.')
 
         # Movies / Shows
+
+        elif cmd.startswith('info '):
+            search = cmd[len('info '):].strip()
+            words = search.split()
+            title = "_".join(words)
+
+            description = get_description(title)
+            director = get_director(title)
+            poster = get_poster(title)
+            actors = get_actors(title)
+
+            result = f'Director: {director}\nSinopsis: {description}\nStarring: {actors}\n\nPoster path: \n{poster}' 
+            print(result)
 
         elif cmd.startswith('add movie '):
                 keyword = cmd[len('add movie '):].strip()
@@ -262,7 +279,7 @@ def main():
             url = cmd_raw[len('yt l '):].strip()
             video = f'yt-dlp -S "res:1080,fps" {url}'
             os.system(video)  
-            
+        
         elif cmd.startswith('yt t '):
             search = cmd_raw[len('yt t '):].strip()
             url = get_url(search)
@@ -274,7 +291,7 @@ def main():
         elif cmd == 'music ls':
             for song in music_list.keys():
                 print(song)
- 
+
         elif cmd == 'system':
             print(get_system_info())
 
