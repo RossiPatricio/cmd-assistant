@@ -1,10 +1,12 @@
 import pyfiglet
 from InquirerPy import inquirer
-from functions import *
-from duck_search import *
 import os, subprocess, time
 from colorama import init, Fore, Style
+from duck_search import *
 from scraping_tomatoes import *
+from functions_system import *
+from functions_music import *
+from functions_download import *
 
 list_folder = r'C:\Users\PRossi\documents-backup\Lists'
 music_folder = r'C:\Users\PRossi\Music'
@@ -20,9 +22,8 @@ game_list = {
 }
 
 folder_list = {
-    #
-    'docs' : r'C:/Users/PRossi/documents-backup',
-    'lists' : r'C:/Users/PRossi/documents-backup/lists',
+    'docs' : r'C:\Users\PRossi\documents-backup',
+    'lists' : list_folder,
 }
 
 doc_list= {
@@ -200,29 +201,7 @@ def main():
  
         elif cmd.startswith('play '):
             query = cmd[len('play '):].strip().lower()
-
-            # Búsqueda parcial
-            matches = [name for name in music_list if query in name]
-            
-            if matches:
-                if len(matches) == 1:
-                    selected = matches[0]
-                    print(f'Reproduciendo: {selected.title()}')
-                    os.startfile(music_list[selected])
-                elif len(matches) >= 2:
-                    ls= {}
-                    for i, song in enumerate(matches, start=1):
-                        ls[i] = song
-                        print(f'{i}- {song}')
-                    number = int(input("Select:")).strip()
-                    if number == '':
-                        pass
-                    else:
-                        print(f'Reproduciendo: {ls[number]}')
-                        os.startfile(music_list[ls[number]])
-                        
-            else:
-                print('Canción no encontrada.')
+            play_music(query)
 
         # Movies / Shows
 
@@ -236,8 +215,10 @@ def main():
             poster = get_poster(title)
             actors = get_actors(title)
 
-            result = f'Director: {director}\nSinopsis: {description}\nStarring: {actors}\n\nPoster path: \n{poster}' 
+            result = f'Director: {director}\n\nSinopsis: \n{description}\n\nStarring:' 
             print(result)
+            for actor in actors:
+                print(f'- {actor}')
 
         elif cmd.startswith('add movie '):
                 keyword = cmd[len('add movie '):].strip()
@@ -264,27 +245,19 @@ def main():
 
         elif cmd.startswith('yt mp3 l '):
             url = cmd_raw[len('yt mp3 l '):].strip()
-            output_path = fr"{music_folder}\%(title)s.%(ext)s"
-            mp3 = f'yt-dlp -x --audio-format mp3 -o {output_path} {url}'
-            os.system(mp3)
+            mp3_url(url)
 
         elif cmd.startswith('yt mp3 t '):
             search = cmd_raw[len('yt mp3 t '):].strip()
-            url = get_url(search)
-            output_path = fr"{music_folder}\%(title)s.%(ext)s"
-            mp3 = f'yt-dlp -x --audio-format mp3 -o {output_path} {url}'
-            os.system(mp3)
+            mp3_title(search)
 
         elif cmd.startswith('yt l '):
             url = cmd_raw[len('yt l '):].strip()
-            video = f'yt-dlp -S "res:1080,fps" {url}'
-            os.system(video)  
-        
+            video_url(url)
+
         elif cmd.startswith('yt t '):
             search = cmd_raw[len('yt t '):].strip()
-            url = get_url(search)
-            video = f'yt-dlp -S "res:1080,fps" {url}'
-            os.system(video)  
+            video_title(search)
 
         # System
 

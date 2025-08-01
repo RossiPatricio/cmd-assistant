@@ -1,18 +1,8 @@
 from playwright.sync_api import sync_playwright
-
 from bs4 import BeautifulSoup
 import time, psutil, os, sys
 
-music_folder = r'C:\Users\PRossi\Music'
 movie_list = r'C:\Users\PRossi\documents-backup\Lists\Movies.txt'
-
-music_list = {}
-
-for filename in os.listdir(music_folder):
-    if filename.endswith(('.mp3', '.wav')):
-        name = os.path.splitext(filename)[0].lower()
-        path = os.path.join(music_folder, filename)
-        music_list[name] = path
 
 def reiniciar_programa():
     os.system("cls")
@@ -103,8 +93,6 @@ def get_face(search):
         
     except Exception as e:
         return(f'Error:{e}')
-
-# SYSTEM
 
 def get_system_info():
     """Devuelve información general del sistema."""
