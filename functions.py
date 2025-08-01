@@ -15,9 +15,8 @@ for filename in os.listdir(music_folder):
         music_list[name] = path
 
 def reiniciar_programa():
-    print("Reiniciando..\n")
-    time.sleep(1)
     os.system("cls")
+    print("Reseting..\n")
     python = sys.executable
     os.execl(python, python, *sys.argv)
 

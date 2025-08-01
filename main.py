@@ -66,7 +66,7 @@ def main():
             print(Fore.CYAN + banner)
             opcion = inquirer.select(
                 message="¿Qué querés hacer?",
-                choices=["Back", "Games", "Shows", "Add","System", "Help", "Exit"]
+                choices=["Back", "Games", "Shows", "Add","System", "Help", "Reset","Exit"]
             ).execute()
 
             if opcion == "System":
@@ -147,13 +147,17 @@ def main():
             elif opcion == "Exit":
                 break
 
+            elif opcion == "Reset":
+                reiniciar_programa()
+
+
         elif cmd == "q":
             break
-        
+   
         elif cmd == "cls":
             os.system("cls")
             print(Fore.CYAN + banner)
-            
+       
         elif cmd == "help":
             print('\nComandos / Funciones')
             for k, v in command_list.items():
@@ -162,17 +166,16 @@ def main():
         elif cmd in software_list:
             subprocess.Popen([software_list[cmd]])
             #os._exit(0)
-   
+
         elif cmd in folder_list:
             os.system(f'start {folder_list[cmd]}')
-      
+  
         elif cmd.startswith('get face '):
             search = cmd[len('get face '):].strip()
             print(get_face(search))
 
         elif cmd == "reset":
             reiniciar_programa()
-            os.system("cls")
 
         elif cmd.startswith('!'):
             os.system(cmd[1:].strip())
@@ -192,7 +195,7 @@ def main():
         elif cmd in game_list:
             subprocess.Popen([game_list[cmd]])
             os._exit(0)  
-     
+
         # Music
  
         elif cmd.startswith('play '):
@@ -202,10 +205,18 @@ def main():
             matches = [name for name in music_list if query in name]
             
             if matches:
-                # Si hay varias, elegí la primera
-                selected = matches[0]
-                print(f'Reproduciendo: {selected.title()}')
-                os.startfile(music_list[selected])
+                if len(matches) == 1:
+                    selected = matches[0]
+                    print(f'Reproduciendo: {selected.title()}')
+                    os.startfile(music_list[selected])
+                elif len(matches) >= 2:
+                    ls= {}
+                    for i, song in enumerate(matches, start=1):
+                        ls[i] = song
+                        print(f'{i}- {song}')
+                    number = int(input("Select:"))
+                    print(f'Reproduciendo: {ls[number]}')
+                    os.startfile(music_list[ls[number]])
             else:
                 print('Canción no encontrada.')
 
@@ -259,7 +270,7 @@ def main():
             os.system(video)  
 
         # System
-        
+
         elif cmd == 'music ls':
             for song in music_list.keys():
                 print(song)
