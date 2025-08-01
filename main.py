@@ -1,6 +1,7 @@
 import pyfiglet
 from InquirerPy import inquirer
 from functions import *
+from duck_search import *
 import os, subprocess, time
 from colorama import init, Fore, Style
 
@@ -42,7 +43,11 @@ command_list = {
     'add' : 'add notes',
     'show': 'updates a list of shows',
     'get face -name': "shows wikipedia image",
-    'play -song': "..."
+    'play -song': '...',
+    'yt l -link': 'download youtube video using url',
+    'yt t -title': 'download youtube video using title',
+    'yt mp3 -link': 'download youtube mp3 using url',
+    '! -cmd': 'enter any windows cli cmd'
 }
 
 def main():
@@ -53,8 +58,6 @@ def main():
     while True:
         cmd_raw = input('C:/Users/PRossi>').strip()
         cmd = cmd_raw.lower()
-
-        # Menu
 
         if cmd == "":
             os.system("cls")
@@ -142,8 +145,6 @@ def main():
             elif opcion == "Exit":
                 break
 
-        # asd
-
         elif cmd == "q":
             break
         
@@ -152,7 +153,7 @@ def main():
             print(Fore.CYAN + banner)
             
         elif cmd == "help":
-            print('\nComandos disponibles:')
+            print('\nComandos / Funciones')
             for k, v in command_list.items():
                 print(f"{k} -> {v}")
 
@@ -167,12 +168,15 @@ def main():
             search = cmd[len('get face '):].strip()
             print(get_face(search))
 
-        elif cmd == "reiniciar":
+        elif cmd == "reset":
             reiniciar_programa()
             os.system("cls")
 
+        elif cmd.startswith('!'):
+            os.system(cmd[1:].strip())
+
         # Docs
-        
+  
         elif cmd == 'add':
             keyword = input('Keyword: ')
             result = input('Any list?: ')
@@ -186,9 +190,9 @@ def main():
         elif cmd in game_list:
             subprocess.Popen([game_list[cmd]])
             os._exit(0)  
-            
+     
         # Music
-        
+ 
         elif cmd.startswith('play '):
             query = cmd[len('play '):].strip().lower()
 
@@ -204,7 +208,7 @@ def main():
                 print('Canción no encontrada.')
 
         # Movies / Shows
-        
+
         elif cmd.startswith('add movie '):
                 keyword = cmd[len('add movie '):].strip()
                 print(add('movie', keyword))
@@ -226,22 +230,27 @@ def main():
             episode = input('Episode: ')
             print(update_show(show, episode))
 
-        # System
-        
-        elif cmd.startswith('!'):
-            os.system(cmd[1:].strip())
+        # Download
 
         elif cmd.startswith('yt mp3 '):
-            url = cmd_raw[len('yt '):].strip()
+            url = cmd_raw[len('yt mp3 '):].strip()
             output_path = fr"{music_folder}\%(title)s.%(ext)s"
             mp3 = f'yt-dlp -x --audio-format mp3 -o {output_path} {url}'
             os.system(mp3)
 
-        elif cmd.startswith('yt v '):
-            url = cmd_raw[len('yt v '):].strip()
+        elif cmd.startswith('yt l '):
+            url = cmd_raw[len('yt l '):].strip()
             video = f'yt-dlp -S "res:1080,fps" {url}'
             os.system(video)  
             
+        elif cmd.startswith('yt t '):
+            search = cmd_raw[len('yt t '):].strip()
+            url = get_url(search)
+            video = f'yt-dlp -S "res:1080,fps" {url}'
+            os.system(video)  
+
+        # System
+ 
         elif cmd == 'system':
             print(get_system_info())
 
