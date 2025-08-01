@@ -46,8 +46,10 @@ command_list = {
     'play -song': '...',
     'yt l -link': 'download youtube video using url',
     'yt t -title': 'download youtube video using title',
-    'yt mp3 -link': 'download youtube mp3 using url',
-    '! -cmd': 'enter any windows cli cmd'
+    'yt mp3 l -link': 'download youtube mp3 using url',
+    'yt mp3 t -title': 'download youtube mp3 using title',
+    '! -cmd': 'enter any windows cli cmd',
+    'music ls': 'shows music list'
 }
 
 def main():
@@ -232,8 +234,15 @@ def main():
 
         # Download
 
-        elif cmd.startswith('yt mp3 '):
-            url = cmd_raw[len('yt mp3 '):].strip()
+        elif cmd.startswith('yt mp3 l '):
+            url = cmd_raw[len('yt mp3 l '):].strip()
+            output_path = fr"{music_folder}\%(title)s.%(ext)s"
+            mp3 = f'yt-dlp -x --audio-format mp3 -o {output_path} {url}'
+            os.system(mp3)
+
+        elif cmd.startswith('yt mp3 t '):
+            search = cmd_raw[len('yt mp3 t '):].strip()
+            url = get_url(search)
             output_path = fr"{music_folder}\%(title)s.%(ext)s"
             mp3 = f'yt-dlp -x --audio-format mp3 -o {output_path} {url}'
             os.system(mp3)
@@ -250,6 +259,10 @@ def main():
             os.system(video)  
 
         # System
+        
+        elif cmd == 'music ls':
+            for song in music_list.keys():
+                print(song)
  
         elif cmd == 'system':
             print(get_system_info())
