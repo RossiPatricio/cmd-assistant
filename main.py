@@ -7,6 +7,7 @@ from scraping_tomatoes import *
 from functions_system import *
 from functions_music import *
 from functions_download import *
+from functions_documents import *
 
 list_folder = r'C:\Users\PRossi\documents-backup\Lists'
 music_folder = r'C:\Users\PRossi\Music'
@@ -32,6 +33,7 @@ doc_list= {
     'shows': fr'{list_folder}\Shows.txt',
     'actors': fr'{list_folder}\Actors.txt',
     'games': fr'{list_folder}\Games.txt',
+    'current shows': r'C:\Users\PRossi\documents-backup\current\shows.txt'
 }
 
 command_list = {
@@ -64,6 +66,7 @@ def main():
         cmd = cmd_raw.lower()
 
         if cmd == "":
+            # MENU
             os.system("cls")
             print(Fore.CYAN + banner)
             opcion = inquirer.select(
@@ -99,7 +102,7 @@ def main():
                 elif juego == "↩ Volver":
                     continue
  
-            elif opcion == "Shows":
+            if opcion == "Shows":
                 show = input('Show: ')
                 episode = input('Episode: ')
                 print(update_show(show, episode))             
@@ -150,7 +153,9 @@ def main():
                 break
 
             elif opcion == "Reset":
-                reiniciar_programa()
+                reset_program()
+                
+        # ACTIONS
 
         elif cmd == "q":
             break
@@ -176,7 +181,7 @@ def main():
             print(get_face(search))
 
         elif cmd == "reset":
-            reiniciar_programa()
+            reset_program()
 
         elif cmd.startswith('!'):
             os.system(cmd[1:].strip())
@@ -202,6 +207,10 @@ def main():
         elif cmd.startswith('play '):
             query = cmd[len('play '):].strip().lower()
             play_music(query)
+            
+        elif cmd == 'music ls':
+            for song in music_list.keys():
+                print(song)
 
         # Movies / Shows
 
@@ -243,12 +252,12 @@ def main():
 
         # Download
 
-        elif cmd.startswith('yt mp3 l '):
-            url = cmd_raw[len('yt mp3 l '):].strip()
+        elif cmd.startswith('mp3 l '):
+            url = cmd_raw[len('mp3 l '):].strip()
             mp3_url(url)
 
-        elif cmd.startswith('yt mp3 t '):
-            search = cmd_raw[len('yt mp3 t '):].strip()
+        elif cmd.startswith('mp3 t '):
+            search = cmd_raw[len('mp3 t '):].strip()
             mp3_title(search)
 
         elif cmd.startswith('yt l '):
@@ -260,10 +269,6 @@ def main():
             video_title(search)
 
         # System
-
-        elif cmd == 'music ls':
-            for song in music_list.keys():
-                print(song)
 
         elif cmd == 'system':
             print(get_system_info())

@@ -11,8 +11,6 @@ for filename in os.listdir(music_folder):
         path = os.path.join(music_folder, filename)
         music_list[name] = path
 
-# MUSIC
-
 def play_music(query):
     matches = [name for name in music_list if query in name]
     
@@ -27,7 +25,10 @@ def play_music(query):
                 ls[i] = song
                 print(f'{i}- {song}')
             number = int(input("Select:"))
-            print(f'Reproduciendo: {ls[number]}')
-            os.startfile(music_list[ls[number]])
+            if number == "":
+                number = int(input("Select:"))
+            else:
+                print(f'Reproduciendo: {ls[number]}')
+                os.startfile(music_list[ls[number]])
         else:
             print('Canción no encontrada.')

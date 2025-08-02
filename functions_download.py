@@ -1,5 +1,6 @@
 import os
 from duck_search import *
+
 music_folder = r'C:\Users\PRossi\Music'
 
 def mp3_url(url):

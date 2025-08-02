@@ -6,11 +6,11 @@ def get_description(movie_title):
     url = base_url + movie_title
     headers = {'User-Agent': 'Mozilla/5.0'}
     response = requests.get(url, headers=headers)
-  
+    
     if response.status_code == 200:
         soup = BeautifulSoup(response.content, 'html.parser')
         description_div = soup.find('div', attrs={'slot': 'description'})
-        
+
         if description_div:
             synopsis = description_div.find('p')
             if synopsis:
@@ -26,7 +26,7 @@ def get_director(movie_title):
     base_url = "https://www.rottentomatoes.com/m/"
     url = base_url + movie_title
     headers = {'User-Agent': 'Mozilla/5.0'}
-    
+
     response = requests.get(url, headers=headers)
     if response.status_code != 200:
         return f"Error al cargar la página: {response.status_code}"
@@ -43,17 +43,17 @@ def get_poster(movie_title):
     base_url = "https://www.rottentomatoes.com/m/"
     url = base_url + movie_title
     headers = {'User-Agent': 'Mozilla/5.0'}
-    
+      
     response = requests.get(url, headers=headers)
     if response.status_code != 200:
         return f"Error al cargar la página: {response.status_code}"
-    
+
     soup = BeautifulSoup(response.text, 'html.parser')
 
     poster_tag = soup.find('rt-img', attrs={'slot': 'posterImage'})
     if poster_tag and poster_tag.has_attr('src'):
         return poster_tag['src']
-    
+
     return "No se encontró el poster."
 
 def get_actors(movie_title, num_actores=4):
