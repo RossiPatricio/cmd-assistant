@@ -11,6 +11,7 @@ def reset_program():
     os.execl(python, python, *sys.argv)
 
 def get_face(search):
+    """ Extrae foto de perfil de wikipedia usando web scrapping. """
     try:
         # Playwright
         pw = sync_playwright().start()
@@ -31,7 +32,7 @@ def get_face(search):
         return(f'Error:{e}')
 
 def get_system_info():
-    """Devuelve información general del sistema."""
+    """ Devuelve información general del sistema. """
     info = {
         'CPU Cores': psutil.cpu_count(logical=True),
         'CPU Frequency': f"{psutil.cpu_freq().current:.2f} MHz",
@@ -41,16 +42,16 @@ def get_system_info():
     return '\n'.join([f"{key}: {value}" for key, value in info.items()])
 
 def get_cpu_usage():
-    """Devuelve el porcentaje de uso de CPU."""
+    """ Devuelve el porcentaje de uso de CPU. """
     return f"CPU Usage: {psutil.cpu_percent(interval=1)}%"
 
 def get_memory_usage():
-    """Devuelve el uso de memoria RAM."""
+    """ Devuelve el uso de memoria RAM. """
     memory = psutil.virtual_memory()
     return f"Memory Usage: {memory.percent}% ({memory.used / (1024**3):.2f} GB / {memory.total / (1024**3):.2f} GB)"
 
 def get_disk_usage():
-    """Devuelve el uso del disco duro."""
+    """ Devuelve el uso del disco duro. """
     disk = psutil.disk_usage('/')
     return f"Disk Usage: {disk.percent}% ({disk.used / (1024**3):.2f} GB / {disk.total / (1024**3):.2f} GB)"
 
