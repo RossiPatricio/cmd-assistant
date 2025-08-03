@@ -6,7 +6,7 @@ movie_list = r'C:\Users\PRossi\documents-backup\Lists\Movies.txt'
 music_list = {}
 
 for filename in os.listdir(music_folder):
-    if filename.endswith(('.mp3', '.wav')):
+    if filename.endswith(('.mp3', '.wav', '.flac')):
         name = os.path.splitext(filename)[0].lower()
         path = os.path.join(music_folder, filename)
         music_list[name] = path
@@ -25,10 +25,7 @@ def play_music(query):
                 ls[i] = song
                 print(f'{i}- {song}')
             number = int(input("Select:"))
-            if number == "":
-                number = int(input("Select:"))
-            else:
-                print(f'Reproduciendo: {ls[number]}')
-                os.startfile(music_list[ls[number]])
+            print(f'Reproduciendo: {ls[number]}')
+            os.startfile(music_list[ls[number]])
         else:
             print('Canción no encontrada.')

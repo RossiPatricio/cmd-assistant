@@ -57,6 +57,6 @@ def get_disk_usage():
 
 def get_network_usage():
     counters = psutil.net_io_counters()
-    sent    = counters.bytes_sent
-    recv    = counters.bytes_recv
+    sent = counters.bytes_sent
+    recv = counters.bytes_recv
     return f"Enviados: {sent/1024/1024:.2f} MB  Recibidos: {recv/1024/1024:.2f} MB"
