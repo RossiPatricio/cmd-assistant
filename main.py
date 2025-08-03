@@ -49,7 +49,7 @@ command_list = {
     'add' : 'add notes',
     'show': 'updates a list of shows',
     'get face -name': "shows wikipedia image",
-    'play -song': '...',
+    'play -song': 'finds and reproduces songs',
     'yt l -url': 'download youtube video using url',
     'yt t -title': 'download youtube video using title',
     'mp3 l -url': 'download youtube mp3 using url',
@@ -159,7 +159,7 @@ def main():
                 
         elif cmd == "q":
             break
-
+        
         elif cmd == "cls":
             os.system("cls")
             print(Fore.CYAN + banner)
@@ -203,11 +203,11 @@ def main():
             os._exit(0)  
 
         # Music
- 
+
         elif cmd.startswith('play '):
             query = cmd[len('play '):].strip().lower()
             play_music(query)
-            
+        
         elif cmd == 'music ls':
             for song in music_list.keys():
                 print(song)
@@ -216,7 +216,9 @@ def main():
 
         elif cmd.startswith('info '):
             search = cmd[len('info '):].strip()
-            print(movie_info(search))
+            info = movie_info(search)
+            for a, b in info.items():
+                print(f'{a}: {b}')
 
         elif cmd.startswith('add movie '):
                 keyword = cmd[len('add movie '):].strip()
