@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 import urllib.parse
 
 def duck_search(termino):
-    """ Usa el buscador duckduckgo para realizar una busqueda. """
     url = f"https://duckduckgo.com/html/?q={termino}"
     headers = {"User-Agent": "Mozilla/5.0"}
     response = requests.get(url, headers=headers)
@@ -12,11 +11,11 @@ def duck_search(termino):
     for first_url in soup.select(".result__title a"):
         enlace = first_url["href"]
         resultados.append(enlace)
+
     return resultados[:1]
 
-def get_url(search):
-    """ Retorna la url del video de youtube que coincida con la busqueda. """
-    input = f'youtube {search}'
+def get_url(search, keyword):
+    input = f'{keyword} {search}'
     result = duck_search(input)
     if result:
         enlace = result[0]

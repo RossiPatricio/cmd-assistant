@@ -1,35 +1,10 @@
-from playwright.sync_api import sync_playwright
-from bs4 import BeautifulSoup
-import time, psutil, os, sys
-
-movie_list = r'C:\Users\PRossi\documents-backup\Lists\Movies.txt'
+import psutil, os, sys
 
 def reset_program():
     os.system("cls")
     print("Reseting..\n")
     python = sys.executable
     os.execl(python, python, *sys.argv)
-
-def get_face(search):
-    """ Extrae foto de perfil de wikipedia usando web scrapping. """
-    try:
-        # Playwright
-        pw = sync_playwright().start()
-        browser= pw.chromium.launch(headless= True)
-        page= browser.new_page()
-        page.goto('https://www.wikipedia.org/')
-        time.sleep(2)
-        page.get_by_label("search").fill(search)
-        page.keyboard.press("Enter")
-        time.sleep(2)
-        # BeautifulSoup
-        soup= BeautifulSoup(page.content(), 'html.parser')
-        image = soup.find('td', class_="imagen")
-        img_path = image.span.a.img['src']
-        return(f'http:{img_path}')
-        
-    except Exception as e:
-        return(f'Error:{e}')
 
 def get_system_info():
     """ Devuelve información general del sistema. """

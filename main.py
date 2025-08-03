@@ -2,12 +2,12 @@ import pyfiglet
 from InquirerPy import inquirer
 import os, subprocess, time
 from colorama import init, Fore, Style
-from duck_search import *
-from scraping_tomatoes import *
+from functions_scrapping import *
 from functions_system import *
 from functions_music import *
 from functions_download import *
 from functions_documents import *
+from duck_Search import *
 
 list_folder = r'C:\Users\PRossi\documents-backup\Lists'
 music_folder = r'C:\Users\PRossi\Music'
@@ -25,6 +25,7 @@ game_list = {
 folder_list = {
     'docs' : r'C:\Users\PRossi\documents-backup',
     'lists' : list_folder,
+    'projects': r'C:\Users\PRossi\code\.programming\.PROJECTS'
 }
 
 doc_list= {
@@ -44,14 +45,15 @@ command_list = {
     "ram-disk-cpu": 'hardware info',
     'help folders': 'folder list',
     'movie' : 'is movie in list?',
+    'movie -title' : 'is movie in list?',
     'add' : 'add notes',
     'show': 'updates a list of shows',
     'get face -name': "shows wikipedia image",
     'play -song': '...',
-    'yt l -link': 'download youtube video using url',
+    'yt l -url': 'download youtube video using url',
     'yt t -title': 'download youtube video using title',
-    'yt mp3 l -link': 'download youtube mp3 using url',
-    'yt mp3 t -title': 'download youtube mp3 using title',
+    'mp3 l -url': 'download youtube mp3 using url',
+    'mp3 t -title': 'download youtube mp3 using title',
     '! -cmd': 'enter any windows cli cmd',
     'music ls': 'shows music list'
 }
@@ -155,8 +157,6 @@ def main():
             elif opcion == "Reset":
                 reset_program()
                 
-        # ACTIONS
-
         elif cmd == "q":
             break
 
@@ -216,18 +216,7 @@ def main():
 
         elif cmd.startswith('info '):
             search = cmd[len('info '):].strip()
-            words = search.split()
-            title = "_".join(words)
-
-            description = get_description(title)
-            director = get_director(title)
-            poster = get_poster(title)
-            actors = get_actors(title)
-
-            result = f'Director: {director}\n\nSinopsis: \n{description}\n\nStarring:' 
-            print(result)
-            for actor in actors:
-                print(f'- {actor}')
+            print(movie_info(search))
 
         elif cmd.startswith('add movie '):
                 keyword = cmd[len('add movie '):].strip()

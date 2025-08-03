@@ -1,5 +1,5 @@
 import os
-from duck_search import *
+from duck_Search import *
 
 music_folder = r'C:\Users\PRossi\Music'
 
@@ -11,7 +11,7 @@ def mp3_url(url):
 
 def mp3_title(title):
     """ Descarga mp3 de cualquier video de youtube con su titulo. """
-    url = get_url(title)
+    url = get_url(title, 'youtube ')
     output_path = fr"{music_folder}\%(title)s.%(ext)s"
     mp3 = f'yt-dlp -x --audio-format mp3 -o {output_path} {url}'
     os.system(mp3)
@@ -23,6 +23,6 @@ def video_url(url):
 
 def video_title(title):
     """ Descarga cualquier video de youtube con su titulo. """
-    url = get_url(title)
+    url = get_url(title, 'youtube ')
     video = f'yt-dlp -S "res:1080,fps" {url}'
     os.system(video)
