@@ -94,6 +94,7 @@ def main():
                 message="Elegí un juego:",
                 choices=[
                     "Skyrim",
+                    "Far Cry 3",
                     "SAMP",
                     "↩ Volver"
                 ]
@@ -101,6 +102,8 @@ def main():
 
                 if juego == "Skyrim":
                     subprocess.Popen([game_list['skyrim']])
+                elif juego == "Far Cry 3":
+                    subprocess.Popen([game_list['far cry']])
                 elif juego == "SAMP":
                     subprocess.Popen([game_list['samp']])
                 elif juego == "↩ Volver":
