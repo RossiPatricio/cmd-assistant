@@ -7,7 +7,7 @@ from functions_system import *
 from functions_music import *
 from functions_download import *
 from functions_documents import *
-from duck_Search import *
+from duck_search import *
 
 list_folder = r'C:\Users\PRossi\documents-backup\Lists'
 music_folder = r'C:\Users\PRossi\Music'
@@ -20,6 +20,8 @@ software_list = {
 game_list = {
     'skyrim' : r'C:\Archivos\The Elder Scrolls V Skyrim Legendary Edition\Skyrim.exe',
     'samp' : r'C:\Archivos\ASD+\samp.exe',
+    'far cry' : r'C:\Program Files (x86)\Far Cry 3 Complete Collection\Far Cry 3\bin\farcry3.exe'
+    #copmo hacer autocompletado para far cr tab-> far cry 3?
 }
 
 folder_list = {

@@ -1,26 +1,14 @@
-import requests
-from bs4 import BeautifulSoup
-import urllib.parse
+from ddgs import DDGS
 
-def duck_search(termino):
-    url = f"https://duckduckgo.com/html/?q={termino}"
-    headers = {"User-Agent": "Mozilla/5.0"}
-    response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.text, "html.parser")
-    resultados = []
-    for first_url in soup.select(".result__title a"):
-        enlace = first_url["href"]
-        resultados.append(enlace)
+def get_url(query):
+    def search(q):
+        with DDGS() as ddgs:
+            # Obtener hasta 10 resultados con ddgs.text
+            results = list(ddgs.text(q, max_results=10))
+            # Extraer solo la URL de cada resultado
+            urls = [r['href'] for r in results]
+            return urls
 
-    return resultados[:1]
-
-def get_url(search, keyword):
-    input = f'{keyword} {search}'
-    result = duck_search(input)
-    if result:
-        enlace = result[0]
-        parsed = urllib.parse.urlparse(enlace)
-        if parsed.path.startswith("/l/"):
-            params = urllib.parse.parse_qs(parsed.query)
-            final_url = params.get("uddg", [None])[0]
-            return final_url
+    results = search(f"site:youtube.com {query}")
+    
+    return results[0]

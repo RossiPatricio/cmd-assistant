@@ -1,7 +1,7 @@
 import requests, time
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-from duck_Search import *
+from duck_search import *
 
 # IMdb
 
@@ -43,7 +43,7 @@ def scrap_imdb(search):
     return dic
 
 def movie_info(element):
-    url = get_url(element, "imdb ")
+    url = get_url(element)
     content = scrap_imdb(url)
     return content
 
