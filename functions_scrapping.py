@@ -73,3 +73,24 @@ def get_face(search):
         
     except Exception as e:
         return(f'Error:{e}')
+
+
+# USD
+
+def get_usd():
+    dolar_types = {
+    'Dolar oficial' : 'https://www.dolarnews.com.ar/cotizacion-dolar-oficial',
+    'Dolar blue' : 'https://www.dolarnews.com.ar/cotizacion-dolar-blue'
+    }
+    for type, url in dolar_types.items():
+        try:
+            response = requests.get(url)
+            soup = BeautifulSoup(response.content, 'html.parser')
+
+            data = soup.find_all('div', class_='pricing')
+
+            for element in data:
+                print(f'{type}: {element.text}')
+        except Exception as e:
+            print(e)
+

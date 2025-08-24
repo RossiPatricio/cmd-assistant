@@ -207,6 +207,11 @@ def main():
             subprocess.Popen([game_list[cmd]])
             os._exit(0)  
 
+        # USD
+
+        elif cmd == 'usd':
+            get_usd()
+
         # Music
 
         elif cmd.startswith('play '):
