@@ -204,14 +204,16 @@ def main():
         elif cmd == 'txt':
             a = search_for(input('Search:'))
             for e in a:
-                print(e)
+                for element in e:
+                    print(element)
+                print()
 
         # Games
 
         elif cmd in game_list:
             subprocess.Popen([game_list[cmd]])
-            os._exit(0)  
-
+            #os._exit(0)  
+        
         # USD
 
         elif cmd == 'usd':

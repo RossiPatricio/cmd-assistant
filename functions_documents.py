@@ -79,8 +79,8 @@ def search_for(keyword):
                         for linea in contenido:
                             if keyword in linea.lower():
                                 result.append((
+                                    nombre_archivo,
                                     linea.strip(),
-                                    f'Archivo: {nombre_archivo}',
                                     f'Linea: {count}'
                                 ))
                             count += 1
