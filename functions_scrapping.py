@@ -47,7 +47,6 @@ def movie_info(element):
     content = scrap_imdb(url)
     return content
 
-
 # Wikipedia
 
 def get_face(search):
@@ -64,6 +63,7 @@ def get_face(search):
         print(f'Searching: {search.title()}')
         page.keyboard.press("Enter")
         time.sleep(2)
+        
         # BeautifulSoup
         print(f'Processing data...')
         soup= BeautifulSoup(page.content(), 'html.parser')
@@ -73,7 +73,6 @@ def get_face(search):
         
     except Exception as e:
         return(f'Error:{e}')
-
 
 # USD
 
@@ -93,4 +92,3 @@ def get_usd():
                 print(f'{type}: {element.text}')
         except Exception as e:
             print(e)
-

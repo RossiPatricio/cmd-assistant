@@ -200,6 +200,11 @@ def main():
 
         elif cmd in doc_list:
             os.system(f'start {doc_list[cmd]}')
+            
+        elif cmd == 'txt':
+            a = search_for(input('Search:'))
+            for e in a:
+                print(e)
 
         # Games
 

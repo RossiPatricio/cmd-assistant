@@ -1,4 +1,5 @@
 from main import movie_list
+import os
 
 def add(result, update):
     """ Agregar lineas a un archivo txt. """
@@ -63,3 +64,26 @@ def update_show(show, episode):
     with open(archivo, 'w', encoding="utf-8") as file_object:
         file_object.writelines(lineas)
         return f'Actualizado: {update.title()}({archivo})'
+
+def search_for(keyword):
+    carpeta_base = r'C:\Users\PRossi\documents-backup'
+    result= []
+    for directorio_actual, subcarpetas, archivos in os.walk(carpeta_base):
+        for nombre_archivo in archivos:
+            if nombre_archivo.endswith('.txt'):
+                ruta_completa_archivo = os.path.join(directorio_actual, nombre_archivo)
+                try:
+                    with open(ruta_completa_archivo, 'r', encoding="utf-8", errors="ignore") as f:
+                        count= 0
+                        contenido = f.readlines()
+                        for linea in contenido:
+                            if keyword in linea.lower():
+                                result.append((
+                                    linea.strip(),
+                                    f'Archivo: {nombre_archivo}',
+                                    f'Linea: {count}'
+                                ))
+                            count += 1
+                except:
+                    print(f'Failed: {nombre_archivo}')
+    return result
