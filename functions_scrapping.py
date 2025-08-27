@@ -77,58 +77,83 @@ def get_face(search):
         return(f'Error:{e}')
 
 def get_wiki():
+    breakers = ['q', 'Q']
+    repeaters = ['', ' ']
     try:
         mediawikiapi = MediaWikiAPI()
         while True:
+            # Busqueda
             search = input('Search: ')
-            
-            if search.lower() == 'q':
+            if search in breakers:
                 break
-            
-            suggest = wikipedia.suggest(search)
+            if search in repeaters:
+                continue
             options = mediawikiapi.search(search)
             
-            if len(options) == 0 and suggest != None: 
-                print(f'Perhaps you mean "{suggest}"?')
-                options = mediawikiapi.search(suggest)
-
+            # Sugerencia de palabra si la busqueda da <3 resultados
+            suggest = wikipedia.suggest(search)
+            if len(options) < 3:
+                suggest = wikipedia.suggest(search)
+                if suggest:
+                    print()
+                    print(f'Perhaps you mean "{suggest.title()}"?')
+                    options = mediawikiapi.search(suggest)
+                else:
+                    continue
+                
+            # Seleccionamos el resultado adecuado de entre una lista
+            print()
+            print('Select and option:')
+            print()
             count = 0
             for option in options:
-                print(f'{count}: {option}')
+                print(f'{count+1}: {option}')
                 count += 1
-            
+            print()
             user_selection = input('Select: ')
-            
-            if user_selection.lower() == 'q':
+            if user_selection in breakers:
                 break
+            if user_selection in repeaters:
+                continue
+            user_selection = int(user_selection) - 1
+            # Guardamos el contenido en la variable -content-
+            content = mediawikiapi.page(options[user_selection])
             
-            content = mediawikiapi.page(options[int(user_selection)])
-            
+            # Seleccionamos como deseamos obtener los datos:
+            print()
+            print('Select data: ')
+            print()
             print('1: Summary')
-            print('2: Sentence -n')
+            print('2: Paragraphs -n')
             print('3: Url')
             print('4: Full content')
-
+            print()
             user = input('Select: ')        
-
-            if user == 'q':
+            if user in breakers:
                 break
+            if user in repeaters:
+                continue
+            # Resumen
             elif user == '1':
                 print()
                 print(content.title)
                 print()
-                print(mediawikiapi.summary(options[int(user_selection)]))
+                print(mediawikiapi.summary(options[user_selection]).strip())
                 print()
-                # Volver al selector de modo, summary, etc
+            # Numero determinado de parrafos
             elif user == '2':
-                sentenc = input('Sentences number:')
-                print(mediawikiapi.summary(options[int(user_selection)], sentences=int(sentenc)))
+                sentenc = input('Paragraphs number:')
+                print(mediawikiapi.summary(options[user_selection], sentences=int(sentenc)))       
+            # URL
             elif user == '3':
                 print(content.url)
+            # Contenido completo
             elif user == '4':
+                print()
+                print(content.title)
+                print()
                 print(content.content)
-            else:
-                print("We're sorry. Not avaible yet.")
+                print()
     except Exception as e:
         print(e)
 
