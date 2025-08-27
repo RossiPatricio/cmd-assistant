@@ -189,7 +189,7 @@ def main():
             
        # WIKI
        
-        elif cmd == 'get wiki':
+        elif cmd == 'wiki':
             get_wiki()
        
         elif cmd.startswith('get face '):

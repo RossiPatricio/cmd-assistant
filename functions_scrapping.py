@@ -3,6 +3,7 @@ from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 from duck_search import *
 from mediawikiapi import MediaWikiAPI
+import wikipedia
 
 # IMdb
 
@@ -76,44 +77,60 @@ def get_face(search):
         return(f'Error:{e}')
 
 def get_wiki():
-    mediawikiapi = MediaWikiAPI()
-    while True:
-        search = input('Search: ')
-        
-        if search.lower() == 'q':
-            break
-        else:
+    try:
+        mediawikiapi = MediaWikiAPI()
+        while True:
+            search = input('Search: ')
+            
+            if search.lower() == 'q':
+                break
+            
+            suggest = wikipedia.suggest(search)
             options = mediawikiapi.search(search)
+            
+            if len(options) == 0 and suggest != None: 
+                print(f'Perhaps you mean "{suggest}"?')
+                options = mediawikiapi.search(suggest)
 
-        count = 0
-        for option in options:
-            print(f'{count}: {option}')
-            count += 1
+            count = 0
+            for option in options:
+                print(f'{count}: {option}')
+                count += 1
+            
+            user_selection = input('Select: ')
+            
+            if user_selection.lower() == 'q':
+                break
+            
+            content = mediawikiapi.page(options[int(user_selection)])
+            
+            print('1: Summary')
+            print('2: Sentence -n')
+            print('3: Url')
+            print('4: Full content')
 
-        user_selection = input('Select: ')
-        
-        if user_selection.lower() == 'q':
-            break
+            user = input('Select: ')        
 
-        print('1: Summary')
-        print('2: Sentence -n')
-        print('3: Url')
-        print('4: Full content')
-        print('5: html')
-
-        user = input('Select: ')
-
-        if user == 'q':
-            break
-        elif user == '1':
-            print()
-            #print title
-            print(mediawikiapi.summary(options[int(user_selection)]))
-        elif user == '2':
-            sentenc = input('Sentences number:')
-            print(mediawikiapi.summary(options[int(user_selection)], sentences=int(sentenc)))
-        else:
-            print("We're sorry. Not avaible yet.")
+            if user == 'q':
+                break
+            elif user == '1':
+                print()
+                print(content.title)
+                print()
+                print(mediawikiapi.summary(options[int(user_selection)]))
+                print()
+                # Volver al selector de modo, summary, etc
+            elif user == '2':
+                sentenc = input('Sentences number:')
+                print(mediawikiapi.summary(options[int(user_selection)], sentences=int(sentenc)))
+            elif user == '3':
+                print(content.url)
+            elif user == '4':
+                print(content.content)
+            else:
+                print("We're sorry. Not avaible yet.")
+    except Exception as e:
+        print(e)
 
 # USD
 
