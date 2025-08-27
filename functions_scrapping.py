@@ -2,6 +2,7 @@ import requests, time
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
 from duck_search import *
+from mediawikiapi import MediaWikiAPI
 
 # IMdb
 
@@ -73,6 +74,46 @@ def get_face(search):
         
     except Exception as e:
         return(f'Error:{e}')
+
+def get_wiki():
+    mediawikiapi = MediaWikiAPI()
+    while True:
+        search = input('Search: ')
+        
+        if search.lower() == 'q':
+            break
+        else:
+            options = mediawikiapi.search(search)
+
+        count = 0
+        for option in options:
+            print(f'{count}: {option}')
+            count += 1
+
+        user_selection = input('Select: ')
+        
+        if user_selection.lower() == 'q':
+            break
+
+        print('1: Summary')
+        print('2: Sentence -n')
+        print('3: Url')
+        print('4: Full content')
+        print('5: html')
+
+        user = input('Select: ')
+
+        if user == 'q':
+            break
+        elif user == '1':
+            print()
+            #print title
+            print(mediawikiapi.summary(options[int(user_selection)]))
+        elif user == '2':
+            sentenc = input('Sentences number:')
+            print(mediawikiapi.summary(options[int(user_selection)], sentences=int(sentenc)))
+        else:
+            print("We're sorry. Not avaible yet.")
 
 # USD
 

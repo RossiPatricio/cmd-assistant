@@ -66,6 +66,7 @@ def update_show(show, episode):
         return f'Actualizado: {update.title()}({archivo})'
 
 def search_for(keyword):
+    """ Busca dentro de todos los archivos txt de un directorio y subcarpetas linea por linea una palabra clave. """
     carpeta_base = r'C:\Users\PRossi\documents-backup'
     result= []
     for directorio_actual, subcarpetas, archivos in os.walk(carpeta_base):
@@ -79,9 +80,9 @@ def search_for(keyword):
                         for linea in contenido:
                             if keyword in linea.lower():
                                 result.append((
-                                    nombre_archivo,
+                                    f'{nombre_archivo}:',
                                     linea.strip(),
-                                    f'Linea: {count}'
+                                    f'(Linea: {count})'
                                 ))
                             count += 1
                 except:

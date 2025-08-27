@@ -9,3 +9,4 @@ pip install pyfiglet colorama
 pip install InquirerPy
 pip install playwright
 pip install psutil
+pip install mediawikiapi

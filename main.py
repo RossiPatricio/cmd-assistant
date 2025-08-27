@@ -181,15 +181,20 @@ def main():
         elif cmd in folder_list:
             os.system(f'start {folder_list[cmd]}')
 
-        elif cmd.startswith('get face '):
-            search = cmd[len('get face '):].strip()
-            print(get_face(search))
-
         elif cmd == "reset":
             reset_program()
 
         elif cmd.startswith('!'):
             os.system(cmd[1:].strip())
+            
+       # WIKI
+       
+        elif cmd == 'get wiki':
+            get_wiki()
+       
+        elif cmd.startswith('get face '):
+            search = cmd[len('get face '):].strip()
+            print(get_face(search))
 
         # Docs
 
