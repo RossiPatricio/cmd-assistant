@@ -8,7 +8,6 @@ import wikipedia
 # IMdb
 
 def scrap_imdb(search):
-    """ Extrae informacion sobre peliculas de IMDB. """
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
         "Accept-Language": "en-US,en;q=0.9"}
@@ -36,11 +35,11 @@ def scrap_imdb(search):
     img = image.img['src']
     
     dic = {
-        'TITLE': title.upper(),
-        'DIRECTOR': director,
-        'SYNOPSIS': resume,
-        'TEAM': crew,
-        'POSTER': img
+        'title': title.upper(),
+        'director': director,
+        'synopsis': resume,
+        'team': crew,
+        'poster': img
     }
     return dic
 
@@ -52,7 +51,7 @@ def movie_info(element):
 # Wikipedia
 
 def get_face(search):
-    """ Extrae foto de perfil de wikipedia usando web scrapping. """
+    """ Extrae foto de perfil de wikipedia usando BeautifulSoup y Playwright. """
     try:
         # Playwright
         pw = sync_playwright().start()

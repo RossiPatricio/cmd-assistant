@@ -78,7 +78,7 @@ def search_for(keyword):
                         count= 0
                         contenido = f.readlines()
                         for linea in contenido:
-                            if keyword in linea.lower():
+                            if keyword.lower() in linea.lower():
                                 result.append((
                                     f'{nombre_archivo}:',
                                     linea.strip(),
